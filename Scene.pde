@@ -41,7 +41,7 @@ void updateScene() {
 
   if (updating) {
     bvhFrame += speedScale;
-    if (bvhFrame >= 1298)
+    if (bvhFrame >= 1299)
       bvhFrame = 100;
   } else {
     bvhFrame = frameCountLog;

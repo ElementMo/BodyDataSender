@@ -22,6 +22,7 @@ void updateGUI() {
   cp5.getController("TimeLine").setValue(bvhFrame);
 }
 
+
 void TimeLine(int frame) {
   //if (cp5.isMouseOver()) {
   if (mouseY < 40) {
@@ -57,10 +58,12 @@ void ByIndex(boolean _byIndex) {
 
 void IP(String _ip) {
   ipAddr = _ip;
+  osc.stop();
   initOSC();
 }
 
 void PORT(String _port) {
   ipPort = Integer.parseInt(_port);
+  osc.stop();
   initOSC();
 }
