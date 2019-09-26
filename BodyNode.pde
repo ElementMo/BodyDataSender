@@ -1,4 +1,4 @@
-
+// BodyNode
 public class BodyNode {
   int ball_index;
   PVector node_pos;
@@ -12,7 +12,7 @@ public class BodyNode {
   }
 
   void draw() {
-    switch(state) {
+    switch (state) {
     case Normal:
       fill(255);
       break;
@@ -23,10 +23,10 @@ public class BodyNode {
       fill(250, 100, 150);
       break;
     }
-    ellipse(node_pos.x, node_pos.y, NODE_RADIANS*2, NODE_RADIANS*2);
+    ellipse(node_pos.x, node_pos.y, NODE_RADIANS * 2, NODE_RADIANS * 2);
 
     textSize(13);
     fill(0);
-    text(ball_index, node_pos.x-6, node_pos.y+3);
+    text(ball_index, node_pos.x - 6, node_pos.y + 3);
   }
 }

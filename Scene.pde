@@ -1,13 +1,14 @@
-boolean updating = true;
-int frameCountLog;
-float bvhFrame;
-float speedScale = 1.0;
+// Scene
+private boolean updating = true;
+private int frameCountLog;
+private float bvhFrame;
+private float speedScale = 1.0f;
 
-void updateScene() {
+private void updateScene() {
   stroke(255);
 
   // model
-  bvh1.update( bvhFrame );
+  bvh1.update(bvhFrame);
   bvh1.draw();
 
 
@@ -17,11 +18,11 @@ void updateScene() {
   fill(20);
   stroke(80);
   translate(0, 5, 0);
-  scale(1, 0.015, 1);
+  scale(1, 0.015f, 1);
   box(200);
   popMatrix();
 
-  // Arrrows
+  // Arrows
   pushStyle();
   strokeWeight(3);
 
