@@ -3,10 +3,11 @@ import java.util.TimerTask;
 
 import java.lang.reflect.Field;
 
-Timer timer = new Timer();
-SendOSCTask task = new SendOSCTask();
+// Timer
+private Timer timer = new Timer();
+private SendOSCTask task = new SendOSCTask();
 
-void initTimer() {
+private void initTimer() {
   timer.scheduleAtFixedRate(task, 0, milliseconds);
 }
 
@@ -15,26 +16,23 @@ class SendOSCTask extends TimerTask {
     public void run() {
     if (byIndex) {
       sendOSC(2);
-    } else if (!byIndex) {
+    } else {
       sendOSC(1);
     }
-    println("Do @ " + millis());
   }
 
-  public void setPeriod(long period) {  
-    setDeclaredField(TimerTask.class, this, "period", period);
-  }  
+  void setPeriod(long period) {
+    setDeclaredField(this, period);
+  }
 
-  boolean setDeclaredField(Class<?> clazz, Object obj, String name, Object value) {  
-    try {  
-      Field field = clazz.getDeclaredField(name);  
-      field.setAccessible(true);  
-      field.set(obj, value);  
-      return true;
-    } 
-    catch (Exception ex) {  
-      ex.printStackTrace();  
-      return false;
+  void setDeclaredField(Object obj, Object value) {
+    try {
+      Field field = TimerTask.class.getDeclaredField("period");
+      field.setAccessible(true);
+      field.set(obj, value);
+    }
+    catch (Exception ex) {
+      ex.printStackTrace();
     }
   }
 }

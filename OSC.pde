@@ -1,7 +1,6 @@
 import netP5.*;
 import oscP5.*;
 
-
 // OSC
 private OscP5 osc;
 private NetAddress addr;
@@ -15,52 +14,43 @@ private void initOSC() {
 }
 
 
-private void sendOSC(int _mode) {
-  OscMessage msg;
-
-  int mode1_index = 0;
-  if (_mode == 1) {
+private void sendOSC(int _node) {
+  int node1_index = 0;
+  if (_node == 1) {
     for (int i = 0; i < boneNodes.size(); i++) {
       if (boneNodes.get(i).node_isActive) {
-        BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
-
-        PVector one_bone_vector;
-        if (applyScale)
-          one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
-        else
-          one_bone_vector = one_bone.getAbsPosition();
-
-        msg = new OscMessage("/" + mode1_index);
-        msg.add(one_bone_vector.x);
-        msg.add(one_bone_vector.y);
-        msg.add(one_bone_vector.z);
-        osc.send(msg, addr);
-        mode1_index ++;
+        SendOneBone(node1_index, i);
+        node1_index ++;
       }
     }
-  } else if (_mode == 2) {
+  } else if (_node == 2) {
     for (int i = 0; i < boneNodes.size(); i++) {
       if (boneNodes.get(i).node_isActive) {
-        BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
-
-        PVector one_bone_vector;
-        if (applyScale)
-          one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
-        else
-          one_bone_vector = one_bone.getAbsPosition();
-
-        msg = new OscMessage("/" + i);
-        msg.add(one_bone_vector.x);
-        msg.add(one_bone_vector.y);
-        msg.add(one_bone_vector.z);
-        osc.send(msg, addr);
+        SendOneBone(i, i);
       }
     }
   }
 }
 
+private void SendOneBone(int node1_index, int i) {
+  OscMessage msg;
+  BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
 
-private void displayOSCMessage(int _mode) {
+  PVector one_bone_vector;
+  if (applyScale)
+    one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
+  else
+    one_bone_vector = one_bone.getAbsPosition();
+
+  msg = new OscMessage("/" + node1_index);
+  msg.add(one_bone_vector.x);
+  msg.add(one_bone_vector.y);
+  msg.add(one_bone_vector.z);
+  osc.send(msg, addr);
+}
+
+
+private void displayOSCMessage(int _node) {
   fill(255);
   textSize(13);
   text("Sending to   " + ipAddr + " : " + ipPort, 30, 80);
@@ -68,47 +58,37 @@ private void displayOSCMessage(int _mode) {
   text("heading         X                      Y                        Z", 30, 140);
 
 
-  int mode1_index = 0;
-  if (_mode == 1) {
+  int node1_index = 0;
+  if (_node == 1) {
     for (int i = 0; i < boneNodes.size(); i++) {
       if (boneNodes.get(i).node_isActive) {
-        BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
-
-        PVector one_bone_vector;
-        if (applyScale)
-          one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
-        else
-          one_bone_vector = one_bone.getAbsPosition();
-
-        float _x = one_bone_vector.x;
-        float _y = one_bone_vector.y;
-        float _z = one_bone_vector.z;
-        text("/" + mode1_index, 50, 160 + 20 * mode1_index);
-        text(_x, 100, 160 + 20 * mode1_index);
-        text(_y, 200, 160 + 20 * mode1_index);
-        text(_z, 300, 160 + 20 * mode1_index);
-        mode1_index ++;
+        DisplayOneBone(node1_index, i);
+        node1_index ++;
       }
     }
-  } else if (_mode == 2) {
+  } else if (_node == 2) {
     for (int i = 0; i < boneNodes.size(); i++) {
       if (boneNodes.get(i).node_isActive) {
-        BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
-
-        PVector one_bone_vector;
-        if (applyScale)
-          one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
-        else
-          one_bone_vector = one_bone.getAbsPosition();
-
-        float _x = one_bone_vector.x;
-        float _y = one_bone_vector.y;
-        float _z = one_bone_vector.z;
-        text("/" + i, 50, 160 + 20 * i);
-        text(_x, 100, 160 + 20 * i);
-        text(_y, 200, 160 + 20 * i);
-        text(_z, 300, 160 + 20 * i);
+        DisplayOneBone(i, i);
       }
     }
   }
+}
+
+private void DisplayOneBone(int node1_index, int i) {
+  BvhBone one_bone = bvh1.getBvhBonesParser().getBones().get(i);
+
+  PVector one_bone_vector;
+  if (applyScale)
+    one_bone_vector = one_bone.getAbsPosition().mult(BvhScale);
+  else
+    one_bone_vector = one_bone.getAbsPosition();
+
+  float _x = one_bone_vector.x;
+  float _y = one_bone_vector.y;
+  float _z = one_bone_vector.z;
+  text("/" + node1_index, 50, 160 + 20 * node1_index);
+  text(_x, 100, 160 + 20 * node1_index);
+  text(_y, 200, 160 + 20 * node1_index);
+  text(_z, 300, 160 + 20 * node1_index);
 }

@@ -1,7 +1,7 @@
-
 private PBvh bvh1;
 private float camX, camY = 0;
-public int milliseconds = 500;
+int milliseconds = 500;
+
 
 public void settings() {
   size(1280, 720, P3D);
@@ -43,20 +43,10 @@ public void draw() {
   ///////////////////////////////////////////
   updateGUI();
   drawNodes();
-  
+
   if (byIndex)
     displayOSCMessage(2);
   else
     displayOSCMessage(1);
   ///////////////////////////////////////////
-
-
-  // Osc
-  //////////////////////////////////////////
-  //if (byIndex)
-  //  sendOSC(2);
-  //else
-  //  sendOSC(1);
-  //clearOscBones();
-  //////////////////////////////////////////
 }
